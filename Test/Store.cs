@@ -38,11 +38,11 @@ public class Store
             Console.WriteLine("8. Delete Customer");
             Console.WriteLine("9. Update Customer");
             Console.WriteLine("10. Search Customer by Name");
-            Console.WriteLine("11. Search Orders by ID or Customer Name"); // Updated based on previous instructions
+            Console.WriteLine("11. Search Orders by ID or Customer Name"); 
             Console.WriteLine("12. Delete an Order");
             Console.WriteLine("13. Update an Order");
             Console.WriteLine("14. List All Customers");
-            Console.WriteLine("15. Exit"); // Correct exit option updated here
+            Console.WriteLine("15. Exit"); 
             Console.Write("Select an option: ");
 
             string choice = Console.ReadLine();
@@ -257,7 +257,6 @@ public class Store
         {
             Console.Write("Enter new status for the order: ");
             string newStatus = Console.ReadLine();
-            // Assuming the Order class has a Status property; if not, add it.
             orderToUpdate.Status = newStatus;
             Console.WriteLine("Order updated successfully.");
         }

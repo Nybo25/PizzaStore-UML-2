@@ -23,12 +23,6 @@ public class CustomerCatalog
             customers[customer.Id] = customer;
         }
     }
-
-    /*public Customer SearchCustomer(string criteria)
-    {
-        return customers.Values.FirstOrDefault(c => c.Name.Equals(criteria, StringComparison.OrdinalIgnoreCase));
-    }*/
-
     public List<Customer> SearchCustomersByName(string name)
     {
         return customers.Values.Where(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase)).ToList();

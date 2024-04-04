@@ -29,7 +29,7 @@ public class MenuCatalog
 
     public void PrintMenu()
     {
-        foreach (var pizza in pizzas.Values)
+        foreach (Pizza pizza in pizzas.Values)
         {
             Console.WriteLine($"Number: {pizza.Number}, Name: {pizza.Name}, Price: {pizza.Price}");
         }
