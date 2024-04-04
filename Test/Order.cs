@@ -7,6 +7,8 @@ public class Order
     public Customer Customer { get; set; }
     public List<Pizza> Pizzas { get; private set; }
     public Dictionary<Pizza, List<(string topping, decimal price)>> ExtraToppings { get; private set; }
+    public DateTime OrderDate { get; set; }
+    public string Status { get; set; }
 
     public Order(int orderId, Customer customer)
     {

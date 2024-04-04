@@ -37,7 +37,12 @@ public class Store
             Console.WriteLine("7. Update Pizza in Menu");
             Console.WriteLine("8. Delete Customer");
             Console.WriteLine("9. Update Customer");
-            Console.WriteLine("10. Exit");
+            Console.WriteLine("10. Search Customer by Name");
+            Console.WriteLine("11. Search Orders by ID or Customer Name"); // Updated based on previous instructions
+            Console.WriteLine("12. Delete an Order");
+            Console.WriteLine("13. Update an Order");
+            Console.WriteLine("14. List All Customers");
+            Console.WriteLine("15. Exit"); // Correct exit option updated here
             Console.Write("Select an option: ");
 
             string choice = Console.ReadLine();
@@ -71,6 +76,21 @@ public class Store
                     UpdateCustomer();
                     break;
                 case "10":
+                    SearchCustomerByName();
+                    break;
+                case "11":
+                    SearchOrders(); 
+                    break;
+                case "12":
+                    DeleteOrder(); 
+                    break;
+                case "13":
+                    UpdateOrder(); 
+                    break;
+                case "14":
+                    ListAllCustomers(); 
+                    break;
+                case "15":
                     running = false;
                     break;
                 default:
@@ -81,6 +101,8 @@ public class Store
             Console.ReadKey();
         }
     }
+
+
 
     private void AddPizza()
     {
@@ -165,6 +187,86 @@ public class Store
         orders.Add(order);
         Console.WriteLine($"Order {orderId} created for {customer.Name}. Total Price: {order.TotalPrice:C}");
     }
+
+    private void SearchCustomerByName()
+    {
+        Console.Write("Enter the customer's name to search: ");
+        string name = Console.ReadLine();
+        List<Customer> customers = customerCatalog.SearchCustomersByName(name);
+
+        foreach (Customer customer in customers)
+        {
+            Console.WriteLine($"ID: {customer.Id}, Name: {customer.Name}");
+        }
+    }
+
+    private void SearchOrders()
+    {
+        Console.WriteLine("Search by: 1 - Order ID, 2 - Customer Name");
+        string searchType = Console.ReadLine();
+        List<Order> foundOrders = new List<Order>();
+
+        if (searchType == "1")
+        {
+            Console.Write("Enter Order ID: ");
+            int orderId = int.Parse(Console.ReadLine());
+            foundOrders = orders.Where(o => o.OrderId == orderId).ToList();
+        }
+        else if (searchType == "2")
+        {
+            Console.Write("Enter Customer Name: ");
+            string name = Console.ReadLine();
+            foundOrders = orders.Where(o => o.Customer.Name.Equals(name, StringComparison.OrdinalIgnoreCase)).ToList();
+        }
+
+        if (foundOrders.Count == 0)
+        {
+            Console.WriteLine("No orders found.");
+        }
+        else
+        {
+            foreach (Order order in foundOrders)
+            {
+                Console.WriteLine($"Order ID: {order.OrderId}, Customer: {order.Customer.Name}, Total Price: {order.TotalPrice:C}");
+            }
+        }
+    }
+
+    private void DeleteOrder()
+    {
+        Console.Write("Enter Order ID to delete: ");
+        int orderId = int.Parse(Console.ReadLine());
+        Order orderToDelete = orders.FirstOrDefault(o => o.OrderId == orderId);
+        if (orderToDelete != null)
+        {
+            orders.Remove(orderToDelete);
+            Console.WriteLine("Order deleted successfully.");
+        }
+        else
+        {
+            Console.WriteLine("Order not found.");
+        }
+    }
+
+    private void UpdateOrder()
+    {
+        Console.Write("Enter Order ID to update: ");
+        int orderId = int.Parse(Console.ReadLine());
+        Order orderToUpdate = orders.FirstOrDefault(o => o.OrderId == orderId);
+        if (orderToUpdate != null)
+        {
+            Console.Write("Enter new status for the order: ");
+            string newStatus = Console.ReadLine();
+            // Assuming the Order class has a Status property; if not, add it.
+            orderToUpdate.Status = newStatus;
+            Console.WriteLine("Order updated successfully.");
+        }
+        else
+        {
+            Console.WriteLine("Order not found.");
+        }
+    }
+
 
     private void AddToppingsToPizza(Order order, Pizza pizza)
     {
@@ -281,6 +383,15 @@ public class Store
         decimal newPrice = decimal.Parse(Console.ReadLine());
         menuCatalog.UpdatePizza(number, newName, newPrice);
         Console.WriteLine("Pizza updated successfully.");
+    }
+
+    private void ListAllCustomers()
+    {
+        Console.WriteLine("Customer List:");
+        foreach (Customer customer in customerCatalog.GetAllCustomers())
+        {
+            Console.WriteLine($"ID: {customer.Id}, Name: {customer.Name}");
+        }
     }
 
 }

@@ -24,9 +24,14 @@ public class CustomerCatalog
         }
     }
 
-    public Customer SearchCustomer(string criteria)
+    /*public Customer SearchCustomer(string criteria)
     {
         return customers.Values.FirstOrDefault(c => c.Name.Equals(criteria, StringComparison.OrdinalIgnoreCase));
+    }*/
+
+    public List<Customer> SearchCustomersByName(string name)
+    {
+        return customers.Values.Where(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase)).ToList();
     }
 
     public IEnumerable<Customer> GetAllCustomers()
